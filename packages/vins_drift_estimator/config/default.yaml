@@ -1,0 +1,124 @@
+main_timer_rate: 100
+drifting_odom_buffer_size: 100
+mrs_uav_status_timer_duration: 0.5
+
+disable_velocity_before_tracker_activation: true
+use_velocity_in_drift_model: true 
+
+stop_using_hw_api: false
+do_velocity_correction_x: true # if true, the velocity of drifting odom will be corrected 
+do_velocity_correction_y: true # if true, the velocity of drifting odom will be corrected 
+do_velocity_correction_z: true # if true, the velocity of drifting odom will be corrected 
+
+transform_corrected_odom: true
+output_frame: "map_origin"
+output_frame_for_drifting_odom: "map_origin"
+drift_corrected_frame_id: "passthrough_origin"
+
+check_valid_measurement:
+  gate_size_threshold: 40
+  gate_size_threshold_xy_correction_noise: 100
+  minimal_fusable_z: 0.0
+
+process_noise:
+  pos_x:    0.4
+  pos_y:    0.4
+  pos_z:    0.5
+  yaw:      0.1
+  vel_x:    1.0
+  vel_y:    1.0 
+  vel_z:    0.5
+  yaw_rate: 10.0
+  x_friction: 0.0055
+  y_friction: 0.0025
+  z_friction: 0.01
+  yaw_friction: 0.01
+
+correction_noise:
+  method: "sigmoid" # "single_value" or "sigmoid" or "fraction"
+  x: 
+    single_value_correction_noise: 0.2
+    sigmoid:
+      min_correction_value:          0.5
+      max_correction_value:          10.0 
+      correction_function_center:    0.6
+      correction_function_steepness: -15
+    fraction:
+      correction_scaling:    0.1
+      correction_confidence: 1.0
+    confidence_x_passthrough_value: 0.4
+  y: 
+    single_value_correction_noise: 0.2
+    sigmoid:
+      min_correction_value:          0.5
+      max_correction_value:          10 
+      correction_function_center:    0.6
+      correction_function_steepness: -25
+    fraction:
+      correction_scaling:    0.1
+      correction_confidence: 1.0
+    confidence_y_passthrough_value: 0.85
+  z: 
+    single_value_correction_noise: 0.2
+    sigmoid:
+      min_correction_value:          0.5
+      max_correction_value:          10.0 
+      correction_function_center:    0.6
+      correction_function_steepness: -25
+    fraction:
+      correction_scaling:    0.1
+      correction_confidence: 1.0
+  yaw: 
+    single_value_correction_noise: 0.2
+    sigmoid:
+      min_correction_value:          0.025
+      max_correction_value:          1.0 
+      correction_function_center:    0.7
+      correction_function_steepness: -30
+    fraction:
+      correction_scaling:    0.1
+      correction_confidence: 1.0
+
+correction_saturation:
+  enabled: true
+  method: "sigmoid" # "single_value" or "sigmoid" or "no_saturation"
+  x: 
+    single_value_saturation: 1.0
+    sigmoid:
+      min_saturate_value:          0.5
+      max_saturate_value:          1.5
+      saturate_function_center:    0.8
+      saturate_function_steepness: 40
+  y: 
+    single_value_saturation: 1.0
+    sigmoid:
+      min_saturate_value:          0.5
+      max_saturate_value:          1.5
+      saturate_function_center:    0.8
+      saturate_function_steepness: 40
+  z: 
+    single_value_saturation: 1.0
+    sigmoid:
+      min_saturate_value:          0.5
+      max_saturate_value:          1.0
+      saturate_function_center:    0.8
+      saturate_function_steepness: 40
+  yaw: 
+    single_value_saturation: 1.0
+    sigmoid:
+      min_saturate_value:          0.15
+      max_saturate_value:          0.25
+      saturate_function_center:    0.75
+      saturate_function_steepness: 30
+
+correction_skipping:
+  enabled: false
+  max_correction_x:   10
+  max_correction_y:   10
+  max_correction_z:   10
+  max_correction_yaw: 10
+
+# the CNN inference returns confidence value in the range of [0-1]
+covariance_coefficient:
+  confidence_threshold: 0.5 # threshold of CNN confidence
+

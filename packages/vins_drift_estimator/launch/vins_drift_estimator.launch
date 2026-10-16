@@ -1,0 +1,57 @@
+<launch>
+
+  <!-- args corresponding to environment variables -->
+  <arg name="UAV_NAME" default="$(optenv UAV_NAME)" />
+  <arg name="RUN_TYPE" default="$(optenv RUN_TYPE)" />
+
+  <arg if="$(eval arg('RUN_TYPE') == 'simulation')" name="simulation" value="true" />
+  <arg unless="$(eval arg('RUN_TYPE') == 'simulation')" name="simulation" value="false" />
+
+  <!-- other args -->
+  <arg name="custom_config" default="$(find vins_drift_estimator)/config/default.yaml" />
+  
+  <arg name="custom_suffix" default="" />
+
+  <arg name="standalone" default="true" />
+  <arg name="nodelet_manager_name" default="$(optenv NODELET_MANAGER)" />
+  <arg name="debug" default="false" />
+
+  <arg     if="$(eval arg('standalone') or arg('debug'))" name="nodelet" value="standalone" />
+  <arg unless="$(eval arg('standalone') or arg('debug'))" name="nodelet" value="load" />
+  <arg     if="$(eval arg('standalone') or arg('debug'))" name="nodelet_manager" value="" />
+  <arg unless="$(eval arg('standalone') or arg('debug'))" name="nodelet_manager" value="$(arg nodelet_manager_name)" />
+
+  <arg     if="$(arg debug)" name="launch_prefix" value="debug_roslaunch" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+
+  <group ns="$(arg UAV_NAME)">
+
+    <node pkg="nodelet" type="nodelet" name="vins_drift_estimator$(arg custom_suffix)" args="$(arg nodelet) vins_drift_estimator/VinsDriftEstimator $(arg nodelet_manager)" output="screen" launch-prefix="$(arg launch_prefix)">
+
+      <rosparam file="$(arg custom_config)" command="load" />
+
+      <param name="uav_name" value="$(arg UAV_NAME)" />
+
+      <!-- Subscribers -->
+      <remap from="~drifting_odom_in" to="estimation_manager/passthrough/odom" />
+      <remap from="~drift_correction_pose_in" to="gate_estimator/estimated_pose" />
+      <remap from="~orientation_in" to="hw_api/orientation" />
+      <remap from="~angular_velocity_in" to="hw_api/angular_velocity" />
+      <remap from="~control_manager_diagnostics_in" to="control_manager/diagnostics" />
+
+      <!-- Publishers -->
+      <remap from="~drifting_odom_out" to="~drifting_odom" />
+      <remap from="~estimated_drift_out" to="~estimated_drift" />
+      <remap from="~internal_estimated_drift_out" to="~internal_estimated_drift" />
+      <remap from="~corrected_odom_out" to="~corrected_odom" />
+      <remap from="~corrected_internal_odom_out" to="~corrected_internal_odom" />
+      <remap from="~debug_msg_out" to="~debug_msg" />
+      <remap from="~mrs_uav_status" to="mrs_uav_status/display_string" />
+      <remap from="~corrected_odom_100hz_out" to="corrected_odom_100hz" />
+
+    </node>
+
+  </group>
+
+</launch>
+

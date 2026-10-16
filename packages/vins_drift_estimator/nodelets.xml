@@ -1,0 +1,6 @@
+<library path="lib/libVinsDriftEstimator">
+  <class name="vins_drift_estimator/VinsDriftEstimator" type="vins_drift_estimator::VinsDriftEstimator" base_class_type="nodelet::Nodelet">
+    <description>Vins Drift Estimator nodelet</description>
+  </class>
+</library>
+
