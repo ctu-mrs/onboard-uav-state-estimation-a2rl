@@ -1,0 +1,12 @@
+mrs_uav_managers:
+  estimation_manager:
+    corrected_vio:
+      max_flight_z: 100.0 # [m] maximum allowed flight Z (in the estimator frame)
+
+      message:
+        topic: "vins_drift_estimator/corrected_odom"
+      
+      override_frame_id: # override the default frame_id with a custom one 
+        enabled: false
+        frame_id: "map_origin" # the desired frame_id without the UAV namespace
+

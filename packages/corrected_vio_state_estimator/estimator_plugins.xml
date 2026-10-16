@@ -1,0 +1,6 @@
+<library path="lib/libMrsUavStateEstimators_CorrectedVio">
+  <class name="mrs_uav_state_estimators/CorrectedVio" type="mrs_uav_state_estimators::corrected_vio::CorrectedVio" base_class_type="mrs_uav_managers::StateEstimator">
+    <description>Corrected VIO State Estimator</description>
+  </class>
+</library>
+
