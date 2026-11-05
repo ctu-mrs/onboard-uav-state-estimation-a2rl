@@ -1142,8 +1142,8 @@ void VinsDriftEstimator::publishCorrectedOdom(const nav_msgs::Odometry::ConstPtr
   mrs_lib::AttitudeConverter internal_odom_ac = mrs_lib::AttitudeConverter(internal_orientation.quaternion); 
 
   Eigen::Quaterniond q_drifting = mrs_lib::AttitudeConverter(drifting_odom->pose.pose.orientation);
-  double yaw                    = mrs_lib::AttitudeConverter(q_drifting).getYaw(); 
   double yaw_drift              = mrs_lib::get_mutexed(lkf_yaw_.mutex_sc_, lkf_yaw_.sc_).x(0); 
+  /* double yaw                    = mrs_lib::AttitudeConverter(q_drifting).getYaw(); */ 
   /* double final_yaw              = mrs_lib::geometry::radians::unwrap(yaw, yaw_drift) - yaw_drift + dt*odom_out.twist.twist.angular.z; */
   /* double delta_yaw              = mrs_lib::geometry::radians::unwrap(final_yaw, yaw) - yaw; */
   double delta_yaw              = yaw_drift + dt*mrs_lib::get_mutexed(lkf_yaw_.mutex_sc_, lkf_yaw_.sc_).x(1);
