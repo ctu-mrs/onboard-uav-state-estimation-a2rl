@@ -33,6 +33,11 @@ In contrast, our method corrects all VIO states (position, orientation, linear a
 Our approach was thoroughly validated through 1600 simulations and numerous real-world experiments.
 Furthermore, we applied the proposed method in the A2RL Drone Racing Challenge 2025, where our team advanced to the final four out of 210 teams and earned a medal.
 
+## Build status
+| Branch | Build status                                                                                                                                                                                                                        |
+|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| master | [![Build status of master branch](https://github.com/ctu-mrs/onboard-uav-state-estimation-a2rl/actions/workflows/ros_build_test.yml/badge.svg)](https://github.com/ctu-mrs/onboard-uav-state-estimation-a2rl/actions/workflows/ros_build_test.yml)                                                        |
+
 ## License
 AGPL-3.0 License. Copyright (C) 2026 F. Novák, M. Petrlík, M. Novosad, P. M. Gupta, R. Pěnička, M. Saska (Faculty of Electrical Engineering, Czech Technical University in Prague).
 
