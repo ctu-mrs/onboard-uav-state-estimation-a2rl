@@ -94,8 +94,3 @@ install(FILES nodelets.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
   )
 
-catkin_install_python(PROGRAMS
-  scripts/remap_gt_to_gate_estimates.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
