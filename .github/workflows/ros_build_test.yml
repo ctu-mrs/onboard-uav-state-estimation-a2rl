@@ -1,0 +1,21 @@
+name: ros_build_test
+
+on:
+
+  push:
+    paths-ignore:
+      - '**/README.md'
+
+  pull_request:
+
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  build:
+    uses: ctu-mrs/ci_scripts/.github/workflows/ros_build_test.yml@master
+
